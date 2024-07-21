@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* styles/globals.css */
+
+/* Định dạng tiêu đề chính */
+h1 {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  /* Khoảng cách giữa các phần tử */
+  .mb-3,
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  @keyframes blink {
+    0% { opacity: 0; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  .blinking-text {
+    animation: blink 3s infinite;
+  }
+  
+  /* Phông chữ và kích thước button */
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
+  
+  /* Định dạng bảng sản phẩm */
+  .table {
+    width: 100%;
+    border-radius: 0.25rem;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    border-bottom-width: 1px;
+    font-weight: bold;
+  }
+  
+  .table td {
+    border-color: #dee2e6;
+  }
+  
+  /* Định dạng các nút trong bảng */
+  .table .btn {
+    margin-right: 0.5rem;
+  }
