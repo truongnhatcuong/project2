@@ -1,6 +1,7 @@
 import React from "react";
 import ExcelJS from "exceljs";
-import { FaFileDownload } from "react-icons/fa";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 // Định nghĩa interface cho các props của component
 interface IExportProps {
@@ -18,10 +19,20 @@ const ExportExcel: React.FC<IExportProps> = ({
   // Hàm exportToExcel được gọi khi người dùng nhấn nút xuất file
   const exportToExcel = async () => {
     // Hiển thị hộp thoại xác nhận trước khi xuất file
-    const confirmExport = window.confirm(
-      "Bạn có chắc chắn muốn xuất file Excel không?"
-    );
-    if (confirmExport) {
+    const confirmExport = withReactContent(Swal);
+    const result = await confirmExport.fire({
+      title: "Bạn có chắc chắn muốn xuất file không?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Có",
+      cancelButtonText: "Hủy",
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+    });
+
+    if (result.isConfirmed) {
       // Tạo workbook mới
       const workbook = new ExcelJS.Workbook();
       // Thêm một worksheet mới vào workbook
@@ -109,8 +120,11 @@ const ExportExcel: React.FC<IExportProps> = ({
   };
 
   return (
-    <button onClick={exportToExcel}>
-      <FaFileDownload /> {/* Icon tải xuống */}
+    <button
+      onClick={exportToExcel}
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      xuất excel
     </button>
   );
 };

@@ -11,6 +11,7 @@ import Pagination from "@/app/compoments/ChucNang/Pagination";
 import { sort } from "fast-sort";
 import ExportExcel from "@/app/compoments/ChucNang/exportExcel";
 import CategoryTable from "@/app/compoments/ChucNang/categories.Table";
+import ExportCSV from "@/app/compoments/ChucNang/xuatCsv";
 
 interface Category {
   id: number;
@@ -44,6 +45,7 @@ const Page = () => {
   const [limit, setLimit] = useState(5);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortByNameOrder, setSortByNameOrder] = useState<"asc" | "desc">("asc");
+  const [exportFormat, setExportFormat] = useState<"csv" | "excel">("csv");
   const { data, error, isValidating } = useSWR(
     `http://localhost:3000/api/categories?keyword=${keyword}&limit=${limit}&page=${currentPage}&sortOrder=${sortOrder}`,
     fetcher,
@@ -177,11 +179,12 @@ const Page = () => {
           fileName={"categories.xlsx"}
           companyName="Công Ty Nhật Cường"
         />
+        <button className="ml-5">
+          {" "}
+          <ExportCSV data={categories} fileName={"categories.csv"} />
+        </button>
       </div>
-      <p className="text-end mr-1 font-bold blinking-text">
-        {" "}
-        Xuất File Tại Đây
-      </p>
+
       <div className="ml-9 mt-2">
         <div className="flex justify-around mt-5">
           <Search
