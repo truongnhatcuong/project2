@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { CSVLink } from "react-csv";
-import { FaDownload } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -12,7 +11,7 @@ interface ExportCSVProps {
 }
 
 const ExportCSV: React.FC<ExportCSVProps> = ({ data, fileName }) => {
-  const [exportConfirmed, setExportConfirmed] = useState(false);
+  const csvLinkRef = useRef<any>(null);
 
   const headers = [
     { label: "ID", key: "id" },
@@ -33,6 +32,10 @@ const ExportCSV: React.FC<ExportCSVProps> = ({ data, fileName }) => {
         cancelButton: "btn btn-danger",
       },
     });
+
+    if (result.isConfirmed) {
+      csvLinkRef.current.link.click();
+    }
   };
 
   return (
@@ -41,23 +44,17 @@ const ExportCSV: React.FC<ExportCSVProps> = ({ data, fileName }) => {
         onClick={handleExport}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded flex items-center"
       >
-        <FaDownload className="mr-2" />
         Xuất CSV
       </button>
-      {/* Điều kiện để xuất file CSV */}
-      {exportConfirmed && (
-        <CSVLink
-          data={data}
-          headers={headers}
-          filename={fileName}
-          className="hidden"
-          id="csv-link"
-          asyncOnClick={true}
-          onClick={() => setExportConfirmed(false)}
-        >
-          Xuất CSV
-        </CSVLink>
-      )}
+      <CSVLink
+        data={data}
+        headers={headers}
+        filename={fileName}
+        className="hidden"
+        ref={csvLinkRef}
+      >
+        Xuất CSV
+      </CSVLink>
     </div>
   );
 };
