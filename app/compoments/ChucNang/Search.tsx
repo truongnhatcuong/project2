@@ -34,14 +34,14 @@ const Search: React.FC<{
     <div className="relative w-[69%]">
       <input
         type="text"
-        className="p-3 pr-16 rounded-lg border-solid border-2 w-[78%]"
+        className="p-3 pr-16 rounded-lg border-solid border-2 border-black w-[78%]"
         placeholder="Search..."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyDown={enterHanler}
       />
       <button
-        className=" absolute right-44 top-1/2 transform -translate-y-1/2 bg-white rounded-lg border-solid border-2 hover:bg-blue-500 p-4 active:bg-blue-400"
+        className=" absolute right-44 top-1/2 transform -translate-y-1/2 bg-white rounded-lg  border-black border-solid border-2 hover:bg-blue-500 p-4 active:bg-blue-400"
         onClick={searchHandler}
       >
         <BsSearch />

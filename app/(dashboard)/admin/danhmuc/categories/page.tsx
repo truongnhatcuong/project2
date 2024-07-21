@@ -172,18 +172,6 @@ const Page = () => {
   return (
     <div className="ml-6">
       <ToastContainer />
-      <div className="flex justify-end mr-14 mt-2">
-        {" "}
-        <ExportExcel
-          data={categories}
-          fileName={"categories.xlsx"}
-          companyName="Công Ty Nhật Cường"
-        />
-        <button className="ml-5">
-          {" "}
-          <ExportCSV data={categories} fileName={"categories.csv"} />
-        </button>
-      </div>
 
       <div className="ml-9 mt-2">
         <div className="flex justify-around mt-5">
@@ -208,6 +196,14 @@ const Page = () => {
         <div className="my-4">
           {" "}
           <Order onSortChange={handleSortChange} />
+        </div>
+        <div className="flex justify-end mr-7 mt-7">
+          {" "}
+          <ExportExcel data={categories} fileName={"categories.xlsx"} />
+          <button className="ml-5">
+            {" "}
+            <ExportCSV data={categories} fileName={"categories.csv"} />
+          </button>
         </div>
         <CategoryTable
           categories={categories}
