@@ -12,7 +12,9 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   const handlePageClick = (page: number) => {
-    onPageChange(page);
+    if (page >= 1 && page <= totalPages && page !== currentPage) {
+      onPageChange(page);
+    }
   };
 
   useEffect(() => {
@@ -24,41 +26,27 @@ const Pagination: React.FC<PaginationProps> = ({
 
   const renderPaginationButtons = () => {
     const buttons = [];
-    const maxButtons = 2; // Số nút phân trang hiển thị tối đa
-    const halfMaxButtons = Math.floor(maxButtons / 2);
+    const totalPagesToShow = 3; // Số nút trang hiển thị tối đa
+    const halfTotalPagesToShow = Math.floor(totalPagesToShow / 2);
 
-    let startPage = Math.max(1, currentPage - halfMaxButtons);
-    let endPage = Math.min(totalPages, currentPage + halfMaxButtons);
+    let startPage = Math.max(1, currentPage - halfTotalPagesToShow);
+    let endPage = Math.min(totalPages, currentPage + halfTotalPagesToShow);
 
-    if (currentPage <= halfMaxButtons) {
-      endPage = Math.min(totalPages, maxButtons);
-    }
-
-    if (currentPage + halfMaxButtons >= totalPages) {
-      startPage = Math.max(1, totalPages - maxButtons + 1);
-    }
-
-    // Nút đầu tiên
-    if (startPage > 1) {
-      buttons.push(
-        <button
-          key={1}
-          className="join-item btn btn-square px-3 py-1 mx-1 rounded-lg cursor-pointer bg-gray-200 text-gray-700"
-          onClick={() => handlePageClick(1)}
-        >
-          1
-        </button>
-      );
-      if (startPage > 2) {
-        buttons.push(<span key="start-ellipsis">...</span>);
+    // Điều chỉnh startPage và endPage nếu chúng nằm ngoài phạm vi
+    if (endPage - startPage + 1 < totalPagesToShow) {
+      if (startPage === 1) {
+        endPage = Math.min(totalPages, startPage + totalPagesToShow - 1);
+      } else if (endPage === totalPages) {
+        startPage = Math.max(1, endPage - totalPagesToShow + 1);
       }
     }
 
+    // Nút trang
     for (let i = startPage; i <= endPage; i++) {
       buttons.push(
         <button
           key={i}
-          className={`join-item btn btn-square px-3 py-1 mx-1 rounded-lg cursor-pointer ${
+          className={`btn btn-square px-3 py-1 rounded-lg cursor-pointer ${
             i === currentPage
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
@@ -70,27 +58,13 @@ const Pagination: React.FC<PaginationProps> = ({
       );
     }
 
-    // Nút cuối cùng
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) {
-        buttons.push(<span key="end-ellipsis">...</span>);
-      }
-      buttons.push(
-        <button
-          key={totalPages}
-          className="join-item btn btn-square px-3 py-1 mx-1 rounded-lg cursor-pointer bg-gray-200 text-gray-700"
-          onClick={() => handlePageClick(totalPages)}
-        >
-          {totalPages}
-        </button>
-      );
-    }
-
     return buttons;
   };
 
   return (
-    <div className="flex justify-end bottom-4">{renderPaginationButtons()}</div>
+    <div className="flex justify-end space-x-2 py-4 mr-4">
+      {renderPaginationButtons()}
+    </div>
   );
 };
 

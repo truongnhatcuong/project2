@@ -1,8 +1,8 @@
+"use client";
 import React from "react";
 import ExcelJS from "exceljs";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { FaFileArrowDown } from "react-icons/fa6";
 
 interface IExportProps {
   data: any[];
@@ -122,6 +122,9 @@ const ExportExcel = ({ data, fileName }: IExportProps) => {
         { width: 40 },
         { width: 40 },
       ];
+
+      // thêm biểu đồ
+
       const buffer = await workBook.xlsx.writeBuffer();
       const blob = new Blob([buffer], {
         type: " application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -137,7 +140,7 @@ const ExportExcel = ({ data, fileName }: IExportProps) => {
   return (
     <button
       onClick={exportToExcel}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded mr-5"
     >
       Xuất Excel
     </button>

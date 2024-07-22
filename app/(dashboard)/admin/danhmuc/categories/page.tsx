@@ -12,6 +12,7 @@ import { sort } from "fast-sort";
 import ExportExcel from "@/app/compoments/ChucNang/exportExcel";
 import CategoryTable from "@/app/compoments/ChucNang/categories.Table";
 import ExportCSV from "@/app/compoments/ChucNang/xuatCsv";
+import ChartComponent from "@/app/compoments/ChucNang/bieudoExcel";
 
 interface Category {
   id: number;
@@ -45,7 +46,7 @@ const Page = () => {
   const [limit, setLimit] = useState(5);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortByNameOrder, setSortByNameOrder] = useState<"asc" | "desc">("asc");
-  const [exportFormat, setExportFormat] = useState<"csv" | "excel">("csv");
+  const [isChartVisible, setIsChartVisible] = useState(false);
   const { data, error, isValidating } = useSWR(
     `http://localhost:3000/api/categories?keyword=${keyword}&limit=${limit}&page=${currentPage}&sortOrder=${sortOrder}`,
     fetcher,
@@ -193,18 +194,22 @@ const Page = () => {
         </div>
 
         {showDemo && <AddCategory closeHandle={closeAddModal} />}
-        <div className="my-4">
-          {" "}
+        <div className="my-4"> </div>
+
+        <div className="flex justify-between items-center mr-3">
           <Order onSortChange={handleSortChange} />
-        </div>
-        <div className="flex justify-end mr-7 mt-7">
-          {" "}
-          <ExportExcel data={categories} fileName={"categories.xlsx"} />
-          <button className="ml-5">
-            {" "}
-            <ExportCSV data={categories} fileName={"categories.csv"} />
+          <button onClick={() => setIsChartVisible(!isChartVisible)}>
+            {isChartVisible ? "Ẩn Biểu Đồ" : "Hiển Thị Biểu Đồ"}
           </button>
         </div>
+
+        <ChartComponent data={categories} visible={isChartVisible} />
+
+        <div className="flex justify-end mr-7 mt-7">
+          <ExportExcel data={categories} fileName={"categories.xlsx"} />
+          <ExportCSV data={categories} fileName={"categories.csv"} />
+        </div>
+
         <CategoryTable
           categories={categories}
           sortByNameOrder={sortByNameOrder}
