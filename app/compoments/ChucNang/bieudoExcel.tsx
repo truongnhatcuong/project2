@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { text } from "stream/consumers";
 
 ChartJS.register(
   CategoryScale,
@@ -38,9 +39,10 @@ const ChartComponent = ({
       {
         label: "Số Lượng Sản Phẩm",
         data: isArray ? data.map((item) => item.id) : [], // Chỉ sử dụng data nếu là mảng
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        borderColor: "rgba(75, 192, 192, 1)",
-        borderWidth: 1,
+        backgroundColor: "#4F81BC",
+        borderColor: "#4F81BC",
+        borderWidth: 3,
+        barThickness: 60,
       },
     ],
   };
@@ -54,12 +56,16 @@ const ChartComponent = ({
       title: {
         display: true,
         text: "Số Lượng Sản Phẩm Theo Danh Mục",
+        font: {
+          size: 20,
+        },
+        color: "red",
       },
     },
   };
 
   return (
-    <div className="w-[95%] h-[70%]">
+    <div className="w-[92%] h-[65%] ml-10">
       <Bar data={chartData} options={options} />;
     </div>
   );

@@ -34,8 +34,8 @@ const menuItem = [
       {
         id: 3,
         icon: <AiOutlineProduct />,
-        title: "cửa hàng",
-        link: "/admin/danhmuc/adcuahang",
+        title: "Biểu Đồ Sản Phẩm",
+        link: "/admin/danhmuc/bieudo",
       },
     ],
   },

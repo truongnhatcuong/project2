@@ -198,12 +198,7 @@ const Page = () => {
 
         <div className="flex justify-between items-center mr-3">
           <Order onSortChange={handleSortChange} />
-          <button onClick={() => setIsChartVisible(!isChartVisible)}>
-            {isChartVisible ? "Ẩn Biểu Đồ" : "Hiển Thị Biểu Đồ"}
-          </button>
         </div>
-
-        <ChartComponent data={categories} visible={isChartVisible} />
 
         <div className="flex justify-end mr-7 mt-7">
           <ExportExcel data={categories} fileName={"categories.xlsx"} />
