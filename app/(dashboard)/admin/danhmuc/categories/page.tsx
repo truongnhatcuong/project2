@@ -46,7 +46,6 @@ const Page = () => {
   const [limit, setLimit] = useState(5);
   const [sortOrder, setSortOrder] = useState("asc");
   const [sortByNameOrder, setSortByNameOrder] = useState<"asc" | "desc">("asc");
-  const [isChartVisible, setIsChartVisible] = useState(false);
   const { data, error, isValidating } = useSWR(
     `http://localhost:3000/api/categories?keyword=${keyword}&limit=${limit}&page=${currentPage}&sortOrder=${sortOrder}`,
     fetcher,

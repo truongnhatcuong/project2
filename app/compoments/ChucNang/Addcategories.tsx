@@ -43,11 +43,7 @@ const AddCategory = (props: { closeHandle: () => void }) => {
         console.log("Thêm thành công sản phẩm", data);
         // mỗi lần thêm sản phẩm tự động hiển thị không cần reload
         mutate("http://localhost:3000/api/categories");
-        // toast.success("Thêm sản phẩm thành công!", {
-        //   position: "top-right",
-        //   autoClose: 5000,
-        // });
-        // thông báo thêm mới sản phẩm
+
         const MySwal = withReactContent(Swal);
         MySwal.fire({
           title: "Thông báo!",

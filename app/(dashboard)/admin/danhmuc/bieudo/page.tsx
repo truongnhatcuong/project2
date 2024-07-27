@@ -8,6 +8,7 @@ interface Category {
   id: number;
   name: string;
   description: string;
+  createAt: string;
 }
 
 interface CategoryTableProps {

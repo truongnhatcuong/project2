@@ -6,23 +6,12 @@ import Modal from "react-modal";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-// interface CategoriesResponse {
-//   categories: {
-//     id: number;
-//     name: string;
-//     description: string;
-//   }[];
-//   message: string;
-// }
-
 interface CategoryItem {
   id: number;
   name: string;
   description: string;
 }
 
-// const fetcher = (url: string): Promise<CategoriesResponse> =>
-//   fetch(url).then((res) => res.json());
 const UpdateCategories = ({
   closeHandle,
   category,
@@ -36,21 +25,6 @@ const UpdateCategories = ({
   const [isLoading, setLoading] = useState(true);
   const [modalIsOpen] = useState(true);
   const MySwal = withReactContent(Swal);
-  // const {
-  //   data: post,
-  //   error,
-  //   isLoading: isFetching,
-  // } = useSWR(`http://localhost:3000/api/categories`, fetcher);
-
-  // useEffect(() => {
-  //   if (!isFetching && post?.categories && post?.categories?.length > 0) {
-  //     const category = post?.categories.find((item) => item.id === props.id);
-  //     setName(category?.name || "");
-  //     setDescription(category?.description || "");
-  //   }
-  //   console.log(post);
-  // }, [post, isFetching]);
-  // chay lai code xem
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const updateHandle = async (e: any) => {
