@@ -1,24 +1,25 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import "chart.js/auto";
+// import {
+//   Chart as ChartJS,
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend,
+// } from "chart.js";
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
 
 interface ChartComponentProps {
   data?: Array<{ createAt: string }>;
@@ -47,6 +48,18 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
   data = [], // Cung cấp giá trị mặc định là mảng trống
   visible,
 }) => {
+  const [todayCount, setTodayCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (visible && data.length > 0) {
+      const transformedData = transformData(data);
+      const today = new Date().toISOString().split("T")[0]; // Ngày hiện tại
+      const todayCount =
+        transformedData.find((item) => item.name === today)?.count || 0;
+      setTodayCount(todayCount);
+    }
+  }, [data, visible]);
+
   if (!visible) return null;
 
   // Kiểm tra xem data có phải là mảng không
@@ -76,12 +89,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
         position: "top" as const,
       },
       title: {
-        display: true,
-        text: "Số Lượng Danh Mục Theo Ngày",
-        font: {
-          size: 20,
-        },
-        color: "red",
+        display: false, // Tắt tiêu đề biểu đồ mặc định
       },
     },
     scales: {
@@ -93,6 +101,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
         // Hiển thị tất cả các ngày trên trục x nếu cần thiết
         ticks: {
           autoSkip: false, // Đảm bảo rằng tất cả các ngày đều được hiển thị
+          maxRotation: 90, // Xoay nhãn ngày nếu cần thiết để tránh bị chồng chéo
         },
       },
       y: {
@@ -111,6 +120,9 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
 
   return (
     <div className="w-[92%] h-[65%] ml-10">
+      <div className="text-center mb-4 mt-5 ">
+        <h2 className="text-xl font-bold">Số Lượng Danh Mục Theo Ngày</h2>
+      </div>
       <Bar data={chartData} options={options} />
     </div>
   );
