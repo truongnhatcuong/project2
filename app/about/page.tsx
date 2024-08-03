@@ -2,12 +2,14 @@ import React from "react";
 
 const AboutMikenco: React.FC = () => {
   return (
-    <section className="py-12 bg-gray-100">
+    <section className="py-12 bg-gray-100 dark:bg-gray-700">
       <div className="container mx-auto px-4">
         {/* Phần tiêu đề */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">Về Mikenco</h2>
-          <p className="text-lg text-gray-600">
+          <h2 className="text-4xl font-bold text-black dark:text-gray-100 mb-4">
+            Về Mikenco
+          </h2>
+          <p className="text-lg text-black dark:text-white">
             Mikenco là một thương hiệu thời trang hàng đầu, cam kết cung cấp
             những sản phẩm thời trang chất lượng cao với thiết kế hiện đại và
             phong cách độc đáo. Chúng tôi tin rằng thời trang không chỉ là trang
@@ -26,10 +28,10 @@ const AboutMikenco: React.FC = () => {
             />
           </div>
           <div className="md:w-1/2 p-4">
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-2xl font-semibold text-black dark:text-white mb-4">
               Tầm Nhìn Của Chúng Tôi
             </h3>
-            <p className="text-gray-600">
+            <p className="text-black dark:text-white">
               Tại Mikenco, chúng tôi không ngừng đổi mới để đáp ứng nhu cầu của
               khách hàng và tạo ra những sản phẩm không chỉ đẹp mà còn chất
               lượng. Chúng tôi hướng tới việc trở thành lựa chọn hàng đầu cho

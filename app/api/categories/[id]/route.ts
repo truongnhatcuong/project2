@@ -23,10 +23,7 @@ export async function GET(
     return NextResponse.json({ category }, { status: 200 });
   }
 }
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE({ params }: { params: { id: string } }) {
   try {
     const categoryId = Number(params.id);
     // Bắt Đầu Xóa

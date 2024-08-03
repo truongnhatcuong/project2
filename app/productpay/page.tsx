@@ -58,49 +58,46 @@ const ProductPay: FC = () => {
     : "0";
 
   return (
-    <Row justify="center" align="middle" style={{ height: "100vh" }}>
-      <Col span={24} style={{ maxWidth: 800 }}>
-        <Title level={1} style={{ fontSize: "3rem", textAlign: "center" }}>
+    <Row
+      justify="center"
+      align="middle"
+      className="min-h-screen bg-gray-100 dark:bg-gray-900"
+    >
+      <Col span={24} className="max-w-2xl">
+        <Title
+          level={1}
+          className="text-3xl text-center text-gray-900 dark:text-gray-100"
+        >
           Thanh toán
         </Title>
         {image && (
           <Card
             cover={
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  height: 300,
-                }}
-              >
+              <div className="flex justify-center items-center h-80 bg-gray-200 dark:bg-gray-800">
                 <img
                   alt={name || "Sản phẩm"}
                   src={image}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                  }}
+                  className="w-full h-auto object-contain max-h-80"
                 />
               </div>
             }
+            className="bg-white dark:bg-gray-800"
           >
             <Card.Meta
               title={
-                <Paragraph style={{ fontSize: "1.5rem" }}>
+                <Paragraph className="text-lg text-gray-900 dark:text-gray-100">
                   Sản phẩm: {name}
                 </Paragraph>
               }
               description={
                 <>
-                  <Paragraph style={{ fontSize: "1.25rem" }}>
+                  <Paragraph className="text-lg text-gray-900 dark:text-gray-100">
                     Kích thước: {size}
                   </Paragraph>
-                  <Paragraph style={{ fontSize: "1.25rem" }}>
+                  <Paragraph className="text-lg text-gray-900 dark:text-gray-100">
                     Tổng tiền: {formattedPrice} VNĐ
                   </Paragraph>
-                  <Paragraph style={{ fontSize: "1.25rem" }}>
+                  <Paragraph className="text-lg text-gray-900 dark:text-gray-100">
                     Địa chỉ giao hàng: {address}
                   </Paragraph>
                   {!isPaid ? (
@@ -108,12 +105,12 @@ const ProductPay: FC = () => {
                       type="primary"
                       size="large"
                       onClick={handlePayment}
-                      style={{ marginTop: 16, fontSize: "1.25rem" }}
+                      className="mt-4 bg-blue-500 border-blue-500 text-white dark:bg-blue-600 dark:border-blue-600"
                     >
                       Thanh toán
                     </Button>
                   ) : (
-                    <Paragraph style={{ fontSize: "1.25rem" }}>
+                    <Paragraph className="text-lg text-gray-900 dark:text-gray-100">
                       Vui lòng chờ...
                     </Paragraph>
                   )}

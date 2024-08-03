@@ -17,10 +17,8 @@ interface Product {
 }
 
 // Fetch dữ liệu sản phẩm trong Server Component
-const fetchProduct = async (id: string) => {
-  const res = await fetch(`http://localhost:3000/api/product/${id}`, {
-    next: { revalidate: 60 }, // Tùy chọn revalidation
-  });
+const fetchProduct = async (id: string): Promise<Product> => {
+  const res = await fetch(`http://localhost:3000/api/product/${id}`);
 
   if (!res.ok) {
     throw new Error("Lỗi khi lấy dữ liệu");

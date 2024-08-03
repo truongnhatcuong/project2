@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+
+import ProductItem from "../components/ProductItem";
 
 interface Product {
   id: number;
@@ -36,35 +37,17 @@ const ProductList: React.FC = () => {
     fetchProducts();
   }, []);
 
-  if (loading) return <p>Đang tải dữ liệu...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-spinner loading-lg text-blue-600"></span>
+      </div>
+    );
+  if (error) return <p className="text-red-600">{error}</p>;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10">
-      {products.map((product) => (
-        <Link key={product.id} href={`/product/${product.id}`}>
-          <div className="card bg-base-100 w-90 shadow-xl cursor-pointer">
-            <figure>
-              <img
-                src={product.image}
-                alt={product.name}
-                className="h-80 w-[70%] object-cover"
-              />
-            </figure>
-            <div className="card-body p-4">
-              <h2 className="card-title text-lg">{product.name}</h2>
-              <p className="text-sm">{product.info}</p>
-              <p className="text-sm">Số lượng: {product.quantity}</p>
-              <p className="text-sm">
-                Giá: {product.price.toLocaleString()} VNĐ
-              </p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary btn-sm">Mua Ngay</button>
-              </div>
-            </div>
-          </div>
-        </Link>
-      ))}
+    <div>
+      <ProductItem result={products} />;
     </div>
   );
 };

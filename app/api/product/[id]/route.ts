@@ -88,3 +88,16 @@ export async function PUT(
     return NextResponse.json({ error: error }, { status: 500 });
   }
 }
+export async function DELETE({ params }: { params: { id: string } }) {
+  const productId = await Number(params.id);
+  try {
+    const deleteproduct = await prisma.product.delete({
+      where: {
+        id: productId,
+      },
+    });
+    return NextResponse.json({ message: "deleted success" }, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
+}
