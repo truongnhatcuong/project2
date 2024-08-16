@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useCart } from "./CartContext";
 const Footer = () => {
+  const cart = useCart();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {

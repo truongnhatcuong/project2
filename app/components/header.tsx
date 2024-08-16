@@ -1,16 +1,28 @@
 "use client";
-import Link from "next/link";
-import { FaHome, FaUser } from "react-icons/fa";
-import { Menu } from "@headlessui/react";
-import { useEffect, useState } from "react";
 
-const Header: React.FC = () => {
-  // Giả sử bạn có một cách nào đó để kiểm tra trạng thái đăng nhập
-  // Ví dụ: sử dụng useState để quản lý trạng thái đăng nhập
-  const [IsClient, setIsClient] = useState(false);
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+import Link from "next/link";
+import { FaHome, FaUser, FaShoppingCart } from "react-icons/fa";
+import { useState } from "react";
+
+import CartPopover from "./CartPopover";
+import { useCart } from "./CartContext";
+
+const Header = () => {
+  const { getTotalQuantity } = useCart();
+  const [isPopoverVisible, setIsPopoverVisible] = useState(false);
+
+  let timer: NodeJS.Timeout;
+
+  const handleMouseEnter = () => {
+    clearTimeout(timer);
+    setIsPopoverVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    timer = setTimeout(() => {
+      setIsPopoverVisible(false);
+    }, 300); // Thời gian chờ trước khi ẩn popover
+  };
 
   return (
     <div className="container mx-auto flex justify-between items-center bg-black text-white p-4">
@@ -36,50 +48,30 @@ const Header: React.FC = () => {
           </li>
         </ul>
       </nav>
-      <div>
-        {IsClient ? (
-          <Menu as="div" className="relative">
-            <Menu.Button className="flex items-center space-x-2 text-white">
-              <FaUser /> <span>Profile</span>
-            </Menu.Button>
-            <Menu.Items className="absolute right-0 mt-2 w-48 bg-white text-black shadow-lg rounded-md">
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href="/profile"
-                    className={`block px-4 py-2 ${active ? "bg-gray-200" : ""}`}
-                  >
-                    My Profile
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href="/settings"
-                    className={`block px-4 py-2 ${active ? "bg-gray-200" : ""}`}
-                  >
-                    Settings
-                  </Link>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <Link
-                    href="/logout"
-                    className={`block px-4 py-2 ${active ? "bg-gray-200" : ""}`}
-                  >
-                    Logout
-                  </Link>
-                )}
-              </Menu.Item>
-            </Menu.Items>
-          </Menu>
-        ) : (
+      <div className="flex items-center space-x-4">
+        <div
+          className="relative"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Link href="/cart" className="flex items-center space-x-2 text-white">
+            <FaShoppingCart />
+            <span className="ml-1">{getTotalQuantity()}</span>
+          </Link>
+          {isPopoverVisible && (
+            <div
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              <CartPopover />
+            </div>
+          )}
+        </div>
+        <div>
           <Link href="/login" className="text-white hover:text-gray-300">
             Đăng Nhập
           </Link>
-        )}
+        </div>
       </div>
     </div>
   );

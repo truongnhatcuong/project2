@@ -46,6 +46,26 @@ h1 {
   .table td {
     vertical-align: middle;
   }
+  /* styles/globals.css */
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Điều chỉnh giá trị này để phần tử di chuyển hoàn toàn ra khỏi màn hình */
+  }
+  
+  .marquee {
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+  }
+  
+  .marquee-content {
+    display: inline-block;
+    animation: marquee 20s linear infinite; /* Điều chỉnh thời gian animation để chạy chậm hơn */
+    white-space: nowrap; /* Đảm bảo nội dung không bị bẻ dòng */
+  }
+  
+  
+  
   
   .table th {
     background-color: #f8f9fa;

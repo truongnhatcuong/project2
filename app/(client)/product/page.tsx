@@ -1,7 +1,7 @@
 "use client";
+import ProductItem from "@/app/components/ProductItem";
+import SearchProduct from "@/app/components/searchProduct";
 import React, { useEffect, useState } from "react";
-
-import ProductItem from "../components/ProductItem";
 
 interface Product {
   id: number;
@@ -19,14 +19,21 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [keyword, setKeyword] = useState("");
+  const [limit, setLimit] = useState<number>(10);
+  const [pageCurrent, setPageCurrent] = useState<number>(1);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/product");
+        const response = await fetch(
+          `http://localhost:3000/api/product?keyword=${
+            keyword || ""
+          }&limit=${limit}&pageCurrent=${pageCurrent}`
+        );
         if (!response.ok) throw new Error("Lỗi mạng");
         const data = await response.json();
-        setProducts(data.products);
+        setProducts(data.products || []);
       } catch (error) {
         setError("Có lỗi xảy ra khi lấy dữ liệu");
       } finally {
@@ -35,7 +42,17 @@ const ProductList: React.FC = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [keyword, limit, pageCurrent]);
+
+  const handleSearch = (
+    keyword: string,
+    limit: number,
+    pageCurrent: number
+  ) => {
+    setKeyword(keyword);
+    setLimit(limit);
+    setPageCurrent(pageCurrent);
+  };
 
   if (loading)
     return (
@@ -47,7 +64,13 @@ const ProductList: React.FC = () => {
 
   return (
     <div>
-      <ProductItem result={products} />;
+      <SearchProduct onSearch={handleSearch} />
+      {products && products.length === 0 && (
+        <h1 className="mt-6 text-2xl  ">không có dữ liệu...................</h1>
+      )}
+      <div>
+        <ProductItem result={products} />
+      </div>
     </div>
   );
 };

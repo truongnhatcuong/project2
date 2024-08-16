@@ -1,7 +1,8 @@
 import React from "react";
+import AdminLayout from "./layout";
 
 const page = () => {
-  return <div>cường</div>;
+  return <section>cường</section>;
 };
 
 export default page;
